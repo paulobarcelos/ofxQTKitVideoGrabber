@@ -46,6 +46,7 @@
 //using this #ifdef lets this .h file be included in cpp files without throwing errors
 //but when included in .m files it works correctly.  another useful trick for mixing oF/ObjC
 #ifdef __OBJC__
+#include "UVCCameraControl.h"
 @class QTKitVideoGrabber;
 #endif
 
@@ -82,12 +83,16 @@ class ofxQTKitVideoGrabber : public ofBaseVideoGrabber
 
 	bool confirmInit();
 	int deviceID;
+	int locationID;
 	bool isInited;
 	bool bUseTexture;
 	#ifdef __OBJC__
-	QTKitVideoGrabber* grabber; //only obj-c needs to know the type of this protected var
+	//only obj-c needs to know the type of these protected vars
+	QTKitVideoGrabber* grabber;
+	UVCCameraControl * cameraControl;
 	#else
 	void* grabber;
+	void * cameraControl;
 	#endif
 };
 
