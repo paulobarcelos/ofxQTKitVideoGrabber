@@ -58,6 +58,7 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 	QTCaptureDeviceInput *videoDeviceInput;
 	NSInteger width, height;
 	NSInteger deviceID;
+	UInt32 locationID;
 	
 	CVImageBufferRef cvFrame;
 	ofTexture* texture;
@@ -73,6 +74,7 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 @property(nonatomic, readonly) NSInteger height;
 @property(nonatomic, readonly) NSInteger width;
 @property(readwrite) NSInteger deviceID;
+@property(readonly) UInt32 locationID;
 @property(retain) QTCaptureSession* session;
 @property(nonatomic, retain) QTCaptureDeviceInput* videoDeviceInput;
 @property(nonatomic, readonly) BOOL isRunning;
@@ -105,6 +107,7 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 @implementation QTKitVideoGrabber
 @synthesize width, height;
 @synthesize deviceID;
+@synthesize	locationID;
 @synthesize session;
 @synthesize videoDeviceInput;
 @synthesize pixels;
@@ -214,6 +217,17 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 			self.videoDeviceInput = [[QTCaptureDeviceInput alloc] initWithDevice:selectedVideoDevice];
 			
 			success = [self.session addInput:self.videoDeviceInput error:&error];
+			if(success){
+				/* The following snippet and comment were coppied straight from the delegate provided by 
+				 Dominic Szablewski as an example on how to interface the UVCCameraControl class.
+				 http://www.phoboslab.org/log/2009/07/uvc-camera-control-for-mac-os-x
+				 */
+				// Ok, this might be all kinds of wrong, but it was the only way I found to map a 
+				// QTCaptureDevice to a IOKit USB Device. The uniqueID method seems to always(?) return 
+				// the locationID as a HEX string in the first few chars, but the format of this string 
+				// is not documented anywhere and (knowing Apple) might change sooner or later.
+				sscanf( [[selectedVideoDevice uniqueID] UTF8String], "0x%8x", &locationID );
+			}
 			if(verbose) ofLog(OF_LOG_VERBOSE, "ofxQTKitVideoGrabber -- Attached camera %s", [[selectedVideoDevice description] cString]);
 		}
 	}
@@ -382,6 +396,10 @@ bool ofxQTKitVideoGrabber::initGrabber(int w, int h){
 	isInited = (grabber != nil);
 	
 	[pool release];	
+	
+	if(isInited){
+		cameraControl = [[UVCCameraControl alloc] initWithLocationID:grabber.locationID];
+	}
 	
 	return isInited;
 }

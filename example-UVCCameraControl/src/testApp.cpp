@@ -21,30 +21,18 @@ void testApp::setup(){
 	camWidth 		= CAM_WIDTH;	// try to grab at this size. 
 	camHeight 		= CAM_HEIGHT;
 	
+	vidGrabber.listDevices();
+	vidGrabber.setDeviceID(0);
 
 	vidGrabber.initGrabber(camWidth, camHeight);
-	
-	videoInverted 	= new unsigned char[camWidth*camHeight*3];
-	videoTexture.allocate(camWidth, camHeight, GL_RGB);
 	
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
 	
-	ofBackground(100,100,100);
+	vidGrabber.update();
 	
-	vidGrabber.grabFrame();
-	
-	if (vidGrabber.isFrameNew()){
-		int totalPixels = camWidth*camHeight*3;
-		unsigned char * pixels = vidGrabber.getPixels();
-		for (int i = 0; i < totalPixels; i++){
-			videoInverted[i] = 255 - pixels[i];
-		}
-		videoTexture.loadData(videoInverted, camWidth,camHeight, GL_RGB);
-	}
-
 }
 
 //--------------------------------------------------------------
@@ -57,7 +45,7 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){ 
-
+vidGrabber.setDeviceID(0);
 }
 
 
