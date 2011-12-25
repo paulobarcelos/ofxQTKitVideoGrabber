@@ -399,6 +399,7 @@ bool ofxQTKitVideoGrabber::initGrabber(int w, int h){
 	
 	if(isInited){
 		cameraControl = [[UVCCameraControl alloc] initWithLocationID:grabber.locationID];
+		[cameraControl setAutoExposure:NO];
 	}
 	
 	return isInited;

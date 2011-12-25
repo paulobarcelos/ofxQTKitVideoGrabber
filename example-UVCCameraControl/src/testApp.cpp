@@ -17,6 +17,7 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){	 
+	ofSetFrameRate(60);
 	
 	camWidth 		= CAM_WIDTH;	// try to grab at this size. 
 	camHeight 		= CAM_HEIGHT;

@@ -227,8 +227,8 @@ const uvc_controls_t uvc_controls = {
 	
 	kr = (*interface)->ControlRequest( interface, 0, &controlRequest );
 	if( kr != kIOReturnSuccess ) {
+		NSLog( @"CameraControl Error: Control request failed: %08x, system(%04x), subsystem(%04x), code(%04x)", kr , err_get_system(kr), err_get_sub(kr), err_get_code(kr));
 		kr = (*interface)->USBInterfaceClose(interface);
-		NSLog( @"CameraControl Error: Control request failed: %08x", kr );
 		return NO;
 	}
 	
@@ -242,7 +242,7 @@ const uvc_controls_t uvc_controls = {
 	IOUSBDevRequest controlRequest;
 	controlRequest.bmRequestType = USBmakebmRequestType( kUSBOut, kUSBClass, kUSBInterface );
 	controlRequest.bRequest = UVC_SET_CUR;
-	controlRequest.wValue = (selector << 8) | 0x2;
+	controlRequest.wValue = (selector << 8) | 0x00;
 	controlRequest.wIndex = (unitId << 8) | 0x2;
 	controlRequest.wLength = length;
 	controlRequest.wLenDone = 0;
@@ -256,7 +256,7 @@ const uvc_controls_t uvc_controls = {
 	IOUSBDevRequest controlRequest;
 	controlRequest.bmRequestType = USBmakebmRequestType( kUSBIn, kUSBClass, kUSBInterface );
 	controlRequest.bRequest = type;
-	controlRequest.wValue = (selector << 8) | 0x2;
+	controlRequest.wValue = (selector << 8) | 0x00;
 	controlRequest.wIndex = (unitId << 8) | 0x2;
 	controlRequest.wLength = length;
 	controlRequest.wLenDone = 0;
