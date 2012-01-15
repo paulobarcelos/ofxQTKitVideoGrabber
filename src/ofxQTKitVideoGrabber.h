@@ -109,32 +109,32 @@ public:
 	void            audioSettings();
 	
 	// UVC Controls [added by paulobarcelos]
-	bool setAutoExposure(bool enabled);
-	bool getAutoExposure();
-	bool setExposure(float value);
-	float getExposure();
+	bool			setAutoExposure(bool enabled);
+	bool			getAutoExposure();
+	bool			setExposure(float value);
+	float			getExposure();
 	
-	bool setAutoFocus(bool enabled);
-	bool getAutoFocus();
-	bool setAbsoluteFocus(float value);
-	float getAbsoluteFocus();
+	bool			setAutoFocus(bool enabled);
+	bool			getAutoFocus();
+	bool			setAbsoluteFocus(float value);
+	float			getAbsoluteFocus();
 	
-	bool setAutoWhiteBalance(bool enabled);
-	bool getAutoWhiteBalance();
-	bool setWhiteBalance(float value);
-	float getWhiteBalance();
+	bool			setAutoWhiteBalance(bool enabled);
+	bool			getAutoWhiteBalance();
+	bool			setWhiteBalance(float value);
+	float			getWhiteBalance();
 	
 	
-	bool setGain(float value);
-	float getGain();
-	bool setBrightness(float value);
-	float getBrightness();
-	bool setContrast(float value);
-	float getContrast();
-	bool setSaturation(float value);
-	float getSaturation();
-	bool setSharpness(float value);
-	float getSharpness();
+	bool			setGain(float value);
+	float			getGain();
+	bool			setBrightness(float value);
+	float			getBrightness();
+	bool			setContrast(float value);
+	float			getContrast();
+	bool			setSaturation(float value);
+	float			getSaturation();
+	bool			setSharpness(float value);
+	float			getSharpness();
     
 protected:
 	
