@@ -70,20 +70,47 @@ class ofxQTKitVideoGrabber : public ofBaseVideoGrabber
 	ofTexture &		getTextureReference();
 	void 			setVerbose(bool bTalkToMe);
 	void			setDeviceID(int deviceID);
-	int				getDeviceID();
 	void			setDesiredFrameRate(int framerate){ ofLog(OF_LOG_WARNING, "ofxQTKitVideoGrabber -- Cannot specify framerate.");  };
 	void			videoSettings();
 	void 			draw(float x, float y, float w, float h);
 	void 			draw(float x, float y);
 	
+	int 			getDeviceID();
 	float 			getHeight();
 	float 			getWidth();
+	
+	// UVC Controls
+	bool setAutoExposure(bool enabled);
+	bool getAutoExposure();
+	bool setExposure(float value);
+	float getExposure();
+	
+	bool setAutoFocus(bool enabled);
+	bool getAutoFocus();
+	bool setAbsoluteFocus(float value);
+	float getAbsoluteFocus();
+	
+	bool setAutoWhiteBalance(bool enabled);
+	bool getAutoWhiteBalance();
+	bool setWhiteBalance(float value);
+	float getWhiteBalance();
+	
+	
+	bool setGain(float value);
+	float getGain();
+	bool setBrightness(float value);
+	float getBrightness();
+	bool setContrast(float value);
+	float getContrast();
+	bool setSaturation(float value);
+	float getSaturation();
+	bool setSharpness(float value);
+	float getSharpness();
 	
   protected:
 
 	bool confirmInit();
 	int deviceID;
-	int locationID;
 	bool isInited;
 	bool bUseTexture;
 	#ifdef __OBJC__
