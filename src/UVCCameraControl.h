@@ -47,11 +47,11 @@ typedef struct {
 
 @interface UVCCameraControl : NSObject {
 	long dataBuffer;
-	UInt8 controlInterfaceID;
+	UInt8 interfaceID;
 	IOUSBInterfaceInterface190 **interface;
 }
 
-- (id)init;
+//- (id)init;
 - (id)initWithLocationID:(UInt32)locationID;
 - (id)initWithVendorID:(long)vendorID productID:(long)productID;
 - (IOUSBInterfaceInterface190 **)getControlInferaceWithDeviceInterface:(IOUSBDeviceInterface **)deviceInterface;

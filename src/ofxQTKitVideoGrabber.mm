@@ -410,7 +410,7 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 				 an example on how to interface the UVCCameraControl class.
 				 http://www.phoboslab.org/log/2009/07/uvc-camera-control-for-mac-os-x
 				 [paulobarcelos]*/
-				sscanf( [[_selectedVideoDevice uniqueID] UTF8String], "0x%8x", &videoDeviceLocationID );
+				sscanf( [[_selectedVideoDevice uniqueID] UTF8String], "0x%8x", (int*)&videoDeviceLocationID );
 			}
 			if(verbose) ofLog(OF_LOG_VERBOSE, "ofxQTKitVideoGrabber -- Attached camera %s", [[_selectedVideoDevice description] cString]);
 		}
@@ -1065,75 +1065,75 @@ bool ofxQTKitVideoGrabber::confirmInit(){
 
 // UVC Controls [paulobarcelos]
 bool ofxQTKitVideoGrabber::setAutoExposure(bool enabled){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setAutoExposure:enabled];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::getAutoExposure(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getAutoExposure];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::setExposure(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setExposure:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getExposure(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getExposure];
 	}
 	return 0;
 }
 
 bool ofxQTKitVideoGrabber::setAutoFocus(bool enabled){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setAutoFocus:enabled];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::getAutoFocus(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getAutoFocus];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::setAbsoluteFocus(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setAbsoluteFocus:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getAbsoluteFocus(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getAbsoluteFocus];
 	}
 	return 0;
 }
 
 bool ofxQTKitVideoGrabber::setAutoWhiteBalance(bool enabled){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setWhiteBalance:enabled];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::getAutoWhiteBalance(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getAutoWhiteBalance];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::setWhiteBalance(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setWhiteBalance:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getWhiteBalance(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getWhiteBalance];
 	}
 	return 0;
@@ -1141,61 +1141,61 @@ float ofxQTKitVideoGrabber::getWhiteBalance(){
 
 
 bool ofxQTKitVideoGrabber::setGain(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setGain:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getGain(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getGain];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setBrightness(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setBrightness:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getBrightness(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getBrightness];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setContrast(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setContrast:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getContrast(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getContrast];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setSaturation(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setSaturation:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getSaturation(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getSaturation];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setSharpness(float value){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl setSharpness:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getSharpness(){
-	if(!isInited){
+	if(isInited){
 		return [cameraControl getSharpness];
 	}
 	return 0;

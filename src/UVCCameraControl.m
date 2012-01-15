@@ -110,7 +110,7 @@ const uvc_controls_t uvc_controls = {
 				// Yep, this is the USB Device that was requested!
 				interface = [self getControlInferaceWithDeviceInterface:deviceInterface];
 				// Store the interface ID as it will be needed for the control requels
-				(*interface)->GetInterfaceNumber(interface, &controlInterfaceID);
+				(*interface)->GetInterfaceNumber(interface, &interfaceID);
 				return self;
 			}
 		} // end while
@@ -156,7 +156,7 @@ const uvc_controls_t uvc_controls = {
 		
 		interface = [self getControlInferaceWithDeviceInterface:deviceInterface];
 		// Store the interface ID as it will be needed for the control requels
-		(*interface)->GetInterfaceNumber(interface, &controlInterfaceID);
+		(*interface)->GetInterfaceNumber(interface, &interfaceID);
 	}
 	return self;
 }
@@ -240,7 +240,7 @@ const uvc_controls_t uvc_controls = {
 	controlRequest.bmRequestType = USBmakebmRequestType( kUSBOut, kUSBClass, kUSBInterface );
 	controlRequest.bRequest = UVC_SET_CUR;
 	controlRequest.wValue = (selector << 8) | 0x00;
-	controlRequest.wIndex = (unitId << 8) | controlInterfaceID;
+	controlRequest.wIndex = (unitId << 8) | interfaceID;
 	controlRequest.wLength = length;
 	controlRequest.wLenDone = 0;
 	controlRequest.pData = &value;
@@ -252,7 +252,7 @@ const uvc_controls_t uvc_controls = {
 	controlRequest.bmRequestType = USBmakebmRequestType( kUSBIn, kUSBClass, kUSBInterface );
 	controlRequest.bRequest = type;
 	controlRequest.wValue = (selector << 8) | 0x00;
-	controlRequest.wIndex = (unitId << 8) | controlInterfaceID;
+	controlRequest.wIndex = (unitId << 8) | interfaceID;
 	controlRequest.wLength = length;
 	controlRequest.wLenDone = 0;
 	controlRequest.pData = &value;

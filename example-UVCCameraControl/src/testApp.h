@@ -33,9 +33,7 @@ class testApp : public ofBaseApp{
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 	
-	ofxQTKitVideoGrabber	vidGrabber;	
-	unsigned char * 	videoInverted;
-	ofTexture			videoTexture;
+	ofxQTKitVideoGrabber	vidGrabber;
 	int 				camWidth;
 	int 				camHeight;
 };
