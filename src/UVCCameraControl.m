@@ -66,8 +66,16 @@ const uvc_controls_t uvc_controls = {
 
 @implementation UVCCameraControl
 
+- (void)dealloc {
+	if( interface ) {
+		(*interface)->USBInterfaceClose(interface);
+		(*interface)->Release(interface);
+	}
+	[super dealloc];
+}
 
-- (id)initWithLocationID:(UInt32)locationID {
+
+- (id)initWithLocationID:(UInt32)locationID{
 	if( self = [super init] ) {
 		interface = NULL;
 		
@@ -101,6 +109,8 @@ const uvc_controls_t uvc_controls = {
 			if( currentLocationID == locationID ) {
 				// Yep, this is the USB Device that was requested!
 				interface = [self getControlInferaceWithDeviceInterface:deviceInterface];
+				// Store the interface ID as it will be needed for the control requels
+				(*interface)->GetInterfaceNumber(interface, &controlInterfaceID);
 				return self;
 			}
 		} // end while
@@ -109,8 +119,7 @@ const uvc_controls_t uvc_controls = {
 	return self;
 }
 
-
-- (id)initWithVendorID:(long)vendorID productID:(long)productID {
+- (id)initWithVendorID:(long)vendorID productID:(long)productID{
 	if( self = [super init] ) {
 		interface = NULL;
 		
@@ -146,11 +155,11 @@ const uvc_controls_t uvc_controls = {
         }
 		
 		interface = [self getControlInferaceWithDeviceInterface:deviceInterface];
+		// Store the interface ID as it will be needed for the control requels
+		(*interface)->GetInterfaceNumber(interface, &controlInterfaceID);
 	}
 	return self;
 }
-
-
 - (IOUSBInterfaceInterface190 **)getControlInferaceWithDeviceInterface:(IOUSBDeviceInterface **)deviceInterface {
 	IOUSBInterfaceInterface190 **controlInterface;
 	
@@ -201,16 +210,6 @@ const uvc_controls_t uvc_controls = {
 	return NULL;
 }
 
-
-- (void)dealloc {
-	if( interface ) {
-		(*interface)->USBInterfaceClose(interface);
-		(*interface)->Release(interface);
-	}
-	[super dealloc];
-}
-
-
 - (BOOL)sendControlRequest:(IOUSBDevRequest)controlRequest {
 	if( !interface ){
 		NSLog( @"CameraControl Error: No interface to send request" );
@@ -236,28 +235,24 @@ const uvc_controls_t uvc_controls = {
 	
 	return YES;
 }
-
-
 - (BOOL)setData:(long)value withLength:(int)length forSelector:(int)selector at:(int)unitId {
 	IOUSBDevRequest controlRequest;
 	controlRequest.bmRequestType = USBmakebmRequestType( kUSBOut, kUSBClass, kUSBInterface );
 	controlRequest.bRequest = UVC_SET_CUR;
 	controlRequest.wValue = (selector << 8) | 0x00;
-	controlRequest.wIndex = (unitId << 8) | 0x2;
+	controlRequest.wIndex = (unitId << 8) | controlInterfaceID;
 	controlRequest.wLength = length;
 	controlRequest.wLenDone = 0;
 	controlRequest.pData = &value;
 	return [self sendControlRequest:controlRequest];
 }
-
-
 - (long)getDataFor:(int)type withLength:(int)length fromSelector:(int)selector at:(int)unitId {
 	long value = 0;
 	IOUSBDevRequest controlRequest;
 	controlRequest.bmRequestType = USBmakebmRequestType( kUSBIn, kUSBClass, kUSBInterface );
 	controlRequest.bRequest = type;
 	controlRequest.wValue = (selector << 8) | 0x00;
-	controlRequest.wIndex = (unitId << 8) | 0x2;
+	controlRequest.wIndex = (unitId << 8) | controlInterfaceID;
 	controlRequest.wLength = length;
 	controlRequest.wLenDone = 0;
 	controlRequest.pData = &value;
@@ -274,12 +269,10 @@ const uvc_controls_t uvc_controls = {
 	return range;
 }
 
-
 // Used to de-/normalize values
 - (float)mapValue:(float)value fromMin:(float)fromMin max:(float)fromMax toMin:(float)toMin max:(float)toMax {
 	return toMin + (toMax - toMin) * ((value - fromMin) / (fromMax - fromMin));
 }
-
 
 // Get a normalized value
 - (float)getValueForControl:(const uvc_control_info_t *)control {
@@ -289,7 +282,6 @@ const uvc_controls_t uvc_controls = {
 	int intval = [self getDataFor:UVC_GET_CUR withLength:control->size fromSelector:control->selector at:control->unit];
 	return [self mapValue:intval fromMin:range.min max:range.max toMin:0 max:1];
 }
-
 
 // Set a normalized value
 - (BOOL)setValue:(float)value forControl:(const uvc_control_info_t *)control {
@@ -310,7 +302,7 @@ const uvc_controls_t uvc_controls = {
 //
 
 - (BOOL)setAutoExposure:(BOOL)enabled {
-	int intval = (enabled ? 0x08 : 0x01); // "auto exposure modes" ar NOT boolean (on|off) as it seems
+	int intval = (enabled ? 0x08 : 0x01); // "auto exposure modes" are NOT boolean (on|off) as it seems
 	printf("setAutoExposure = %i \n",enabled);
 	return [self setData:intval 
 			  withLength:uvc_controls.autoExposure.size 
