@@ -1065,75 +1065,75 @@ bool ofxQTKitVideoGrabber::confirmInit(){
 
 // UVC Controls [paulobarcelos]
 bool ofxQTKitVideoGrabber::setAutoExposure(bool enabled){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setAutoExposure:enabled];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::getAutoExposure(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getAutoExposure];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::setExposure(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setExposure:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getExposure(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getExposure];
 	}
 	return 0;
 }
 
 bool ofxQTKitVideoGrabber::setAutoFocus(bool enabled){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setAutoFocus:enabled];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::getAutoFocus(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getAutoFocus];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::setAbsoluteFocus(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setAbsoluteFocus:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getAbsoluteFocus(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getAbsoluteFocus];
 	}
 	return 0;
 }
 
 bool ofxQTKitVideoGrabber::setAutoWhiteBalance(bool enabled){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setWhiteBalance:enabled];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::getAutoWhiteBalance(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getAutoWhiteBalance];
 	}
 	return false;
 }
 bool ofxQTKitVideoGrabber::setWhiteBalance(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setWhiteBalance:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getWhiteBalance(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getWhiteBalance];
 	}
 	return 0;
@@ -1141,61 +1141,61 @@ float ofxQTKitVideoGrabber::getWhiteBalance(){
 
 
 bool ofxQTKitVideoGrabber::setGain(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setGain:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getGain(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getGain];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setBrightness(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setBrightness:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getBrightness(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getBrightness];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setContrast(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setContrast:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getContrast(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getContrast];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setSaturation(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setSaturation:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getSaturation(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getSaturation];
 	}
 	return 0;
 }
 bool ofxQTKitVideoGrabber::setSharpness(float value){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl setSharpness:value];
 	}
 	return false;
 }
 float ofxQTKitVideoGrabber::getSharpness(){
-	if(isInited){
+	if(confirmInit()){
 		return [cameraControl getSharpness];
 	}
 	return 0;
