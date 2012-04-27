@@ -103,8 +103,8 @@ public:
 	void			setAudioDeviceID(string audioDeviceIDString);
 	int				getAudioDeviceID();
     
-	void			setDesiredFrameRate(int framerate){ ofLog(OF_LOG_WARNING, "ofxQTKitVideoGrabber -- Cannot specify framerate.");  };
-	
+    void			setDesiredFrameRate(int framerate);
+
     void			videoSettings();
 	void            audioSettings();
 	
@@ -136,8 +136,13 @@ public:
 	bool			setSharpness(float value);
 	float			getSharpness();
     
-protected:
-	
+    // [added by rbeitra]    
+    void            getDevices(vector<string>& list);
+	void            setPixelFormat(ofPixelFormat pixelFormat){};//ignore for now
+	ofPixelFormat   getPixelFormat(){return OF_PIXELS_RGB;};//ignore for now
+    
+  protected:
+
     bool confirmInit();
     
     vector<string>	videoDeviceVec;
