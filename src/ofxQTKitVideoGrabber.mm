@@ -55,7 +55,7 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 	}	
 }
 
-@interface QTKitVideoGrabber : QTCaptureVideoPreviewOutput
+@interface QTKitVideoGrabber : QTCaptureDecompressedVideoOutput
 {
     QTCaptureSession *session;
 	QTCaptureDeviceInput *videoDeviceInput;
@@ -121,6 +121,8 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 
 - (bool) setSelectedVideoDevice:(QTCaptureDevice *)selectedVideoDevice;
 - (bool) setSelectedAudioDevice:(QTCaptureDevice *)selectedAudioDevice;
+
+- (void) setDesiredFramerate: (NSInteger)fps;
 
 - (void) setVideoDeviceID:(NSInteger)_videoDeviceID;
 - (void) setAudioDeviceID:(NSInteger)_audioDeviceID;
@@ -381,6 +383,14 @@ static inline void argb_to_rgb(unsigned char* src, unsigned char* dst, int numPi
 			audioDeviceID = _audioDeviceID;
 		}
 	}
+}
+
+
+- (void) setDesiredFramerate:(NSInteger)fps
+{
+    double interval = 1.0/fps;
+    [self setMinimumVideoFrameInterval: interval];
+    [self setAutomaticallyDropsLateVideoFrames: YES];
 }
 
 - (bool) setSelectedVideoDevice:(QTCaptureDevice *)_selectedVideoDevice
@@ -744,6 +754,14 @@ ofxQTKitVideoGrabber::~ofxQTKitVideoGrabber(){
 	}
 }
 
+void ofxQTKitVideoGrabber::setDesiredFrameRate(int framerate){
+    if(isInited){
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        [grabber setDesiredFramerate:framerate];
+        [pool release];	
+    }
+};
+
 void ofxQTKitVideoGrabber::setDeviceID(int _videoDeviceID){
     setVideoDeviceID(_videoDeviceID);
 }
@@ -912,6 +930,9 @@ bool ofxQTKitVideoGrabber::isRecording(){
 // but that requires updating the base class...perhaps we could
 // then have a ofBaseDevice class to be used for enumerating any 
 // type of device for video, sound, serial devices etc etc???
+void ofxQTKitVideoGrabber::getDevices(vector<string>& devices){
+    devices = listVideoDevices();
+}
 void ofxQTKitVideoGrabber::listDevices(){
     listVideoDevices();
 }
